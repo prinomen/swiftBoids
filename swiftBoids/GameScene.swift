@@ -1,6 +1,4 @@
 import SpriteKit
-import GameplayKit
-
 class GameScene: SKScene {
     let shipTex = SKTexture(imageNamed: "Spaceship")
     var dx = CGFloat()
@@ -31,7 +29,6 @@ class GameScene: SKScene {
         planet2.position = CGPoint(x: 0, y: 50)
         self.addChild(planet2)
         
-        let shipTex = SKTexture(imageNamed: "Spaceship")
         let ship1 = SKSpriteNode(texture: shipTex, color: .clear, size: CGSize(width: shipTex.size().width / 16, height: shipTex.size().height / 16))
         ship1.name = "ship"
         let shipField1 = SKFieldNode.radialGravityField()
@@ -81,23 +78,6 @@ class GameScene: SKScene {
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-        let shipList = self["//ship"]
-        for ship in shipList {
-            dx = pos.x - ship.position.x
-            dy = pos.y - ship.position.y
-            dist = dx*dx+dy*dy
-            if (fabs(dist) > 0.01) {
-                dist = sqrt(dist)
-                let vx = Float((ship.physicsBody?.velocity.dx)!)
-                let vy = Float((ship.physicsBody?.velocity.dy)!)
-                ship.zRotation = CGFloat(atan2f(vy, vx) - Float(0.5)) * .pi
-                let vxCGFloat = CGFloat(vx)
-                let vyCGFloat = CGFloat(vy)
-                dx = (dx - vxCGFloat) * dist * 0.0001
-                dy = (dy - vyCGFloat) * dist * 0.0001
-                ship.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
-            }
-        }
     }
     
     func touchUp(atPoint pos : CGPoint) {
